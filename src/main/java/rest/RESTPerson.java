@@ -34,9 +34,9 @@ public class RESTPerson
     @Path("{getamount}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPersonsJson(@PathParam("getamount") int amount)
+    public Response getPersonsFromAmountJson(@PathParam("getamount") int amount)
     {
-        String json = gson.toJson(f.getAllPersons(amount));
+        String json = gson.toJson(f.getAllPersonsFromAmount(amount));
 
         return Response.ok(json).build();
     }

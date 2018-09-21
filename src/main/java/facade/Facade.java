@@ -22,7 +22,7 @@ public class Facade
         return emf.createEntityManager();
     }
 
-    public List<Person> getAllPersons(int amount)
+    public List<Person> getAllPersonsFromAmount(int amount)
     {
         EntityManager em = getEntityManager();
 
