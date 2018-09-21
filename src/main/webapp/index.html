@@ -1,10 +1,62 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Start Page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>REST / JAVASCRIPT - Persons</title>
+        <style>
+            table, td {border: solid 1px black;}
+        </style>
+        <script>
+            var persons;
+            var amount = 50;
+            window.addEventListener("load", function ()
+            {
+                PersonsRefresh();
+                document.getElementById("PersonsRefresh").addEventListener("click", function ()
+                {
+                    PersonsRefresh();
+                });
+            });
+            function PersonsRefresh()
+            {
+                var rows = "";
+                document.getElementById("rows").innerHTML = "";
+                fetch('api/person/' + amount)
+                .then(function (response) {
+                    if (response.status !== 200)
+                    {
+                        return;
+                    }
+                    response.json()
+                    .then(function (data)
+                    {
+                        persons = data;
+                        data.forEach(function (person, i)
+                        {
+                            rows += '<tr><td>' + person.fname + '</td><td>' + person.lname + '</td><td>' 
+                                    + person.age + '</td></tr>';
+                        });
+                        document.getElementById("rows").innerHTML = rows;
+                    })
+                    .catch(function (err)
+                    {
+                        console.log('Fetch Error:', err);
+                    });
+                });
+            }
+        </script>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>REST / JAVASCRIPT - Persons</h1>
+
+        <table id="TablePersons">
+            <thead>
+                <tr><td>First name</td><td>Last name</td><td>Age</td></tr>
+            </thead>
+            <tbody id="rows"></tbody>
+        </table>
+
+        <input id="PersonsRefresh" type="button" value="Persons refresh" /><br />
+
     </body>
 </html>
